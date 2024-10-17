@@ -1,0 +1,48 @@
+type Query {
+    users: [UserRs!]
+    userById(id: ID!): UserRs
+    postById(id: ID!): PostRs
+}
+
+type UserRs {
+    id: ID!
+    username: String!
+    email: String!
+    postsByUser: [PostRs]
+}
+
+type PostRs {
+    id: ID!,
+    text: String!,
+    user: UserRs,
+    commentsByPost: [CommentRs]
+}
+
+type CommentRs {
+    id: ID!,
+    text: String!,
+    user: UserRs
+}
+
+type Mutation {
+    createUser(userRq: UserRq!): UserRs!
+    createPost(postRq: PostRq!): PostRs!
+    createComment(commentRq: CommentRq!): CommentRs!
+}
+
+input UserRq {
+    username: String!,
+    email: String!
+}
+
+input PostRq {
+    userId: ID!,
+    text: String!
+}
+
+input CommentRq {
+    text: String!,
+    userId: ID!,
+    postId: ID!
+}
+
